@@ -6,7 +6,7 @@
 // @description    Add the Australian regional population density tiles as an optional layer.
 // @id             basemap-abspopulation
 // @namespace      https://github.com/dleonard0/some-iitc-plugins
-// @downloadURL    https://github.com/dleonard0/some-iitc-plugins/basemap-abspopulation.user.js
+// @downloadURL    https://github.com/dleonard0/some-iitc-plugins/raw/master/basemap-abspopulation.user.js
 // @match          https://intel.ingress.com/*
 // @grant          none
 // ==/UserScript==
