@@ -2,7 +2,7 @@
 // @author         dleonard0
 // @name           IITC plugin: Population grid map
 // @category       Map Tiles
-// @version        1.0.0
+// @version        1.0.1
 // @description    Add the Australian regional population density tiles as an optional layer.
 // @id             basemap-abspopulation
 // @namespace      https://github.com/dleonard0/some-iitc-plugins
@@ -38,7 +38,7 @@ window.plugin.mapTileabspopulation = {
     var absOpt = {
       attribution: 'Source: Australian Bureau of Statistics',
       maxNativeZoom: 14,
-      maxZoom: 14,
+      minNativeZoom: 4,
     };
 
     var layers = {
