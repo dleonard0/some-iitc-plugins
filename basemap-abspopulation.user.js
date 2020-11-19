@@ -2,7 +2,7 @@
 // @author         dleonard0
 // @name           IITC plugin: Population grid map
 // @category       Map Tiles
-// @version        1.0.1
+// @version        1.0.2
 // @description    Add the Australian regional population density tiles as an optional layer.
 // @id             basemap-abspopulation
 // @namespace      https://github.com/dleonard0/some-iitc-plugins
@@ -22,34 +22,24 @@ plugin_info.dateTimeVersion = '2020-11-19-171500';
 plugin_info.pluginId = 'basemap-abspopulation';
 //END PLUGIN AUTHORS NOTE
 
-
-// use own namespace for plugin
 window.plugin.mapTileabspopulation = {
   addLayer: function() {
-
-    /*
-     * TODO:
-     * fetch descriptor from https://absstats.maps.arcgis.com/sharing/rest/content/items/2ad1771db9284e74b744325e77c5722c/data?f=json
-     * then data.["operationalLayers"]["url"] will be an url of the form
-     *     "https://tiles.arcgis.com/tiles/v8Kimc579yljmjSP/arcgis/rest/services/Population_Grid/MapServer"
-     * and we append "/tile/{z}/{y}/{x}" to it.
-     */
-
-    var absOpt = {
-      attribution: 'Source: Australian Bureau of Statistics',
-      maxNativeZoom: 14,
-      minNativeZoom: 4,
-    };
-
-    var layers = {
-      /* https://www.abs.gov.au/statistics/people/population/regional-population/2018-19 */
-      'https://tiles.arcgis.com/tiles/v8Kimc579yljmjSP/arcgis/rest/services/Population_Grid/MapServer/tile/{z}/{y}/{x}': 'Population grid 2019',
-    };
-
-    for(var url in layers) {
-      var layer = new L.TileLayer(url, absOpt);
-      layerChooser.addBaseLayer(layer, layers[url]);
-    }
+    $.ajax({
+      url: "https://absstats.maps.arcgis.com/sharing/rest/content/items/2ad1771db9284e74b744325e77c5722c/data?f=json",
+      dataType: "json",
+      success: function (data, textStatus, jqXHR) {
+        var absOpt = {
+          attribution: 'Source: Australian Bureau of Statistics',
+          maxNativeZoom: 14,
+          minNativeZoom: 4,
+        };
+        for (let l of data.operationalLayers) {
+          let layer = new L.TileLayer(l.url + '/tile/{z}/{y}/{x}', absOpt);
+          window.layerChooser.addBaseLayer(layer, "Population density 2019" /*l.title*/);
+          break;
+        }
+      },
+    })
   },
 };
 
